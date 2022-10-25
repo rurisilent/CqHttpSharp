@@ -15,8 +15,8 @@ namespace CqHttpSharp.WebSocket
 
     public class CqHttpWebSocket
     {
-        string ip;
-        int port;
+        readonly string ip;
+        readonly int port;
 
         ClientWebSocket client;
         CancellationTokenSource cancellationTokenSource;
