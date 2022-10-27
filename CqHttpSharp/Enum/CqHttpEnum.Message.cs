@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CqHttpSharp.Enum
 {
-    public enum CqHttpPostMessageSubType
+    public enum CqHttpMessageSubType
     {
         friend, //好友消息
         group, //临时消息
@@ -14,7 +14,7 @@ namespace CqHttpSharp.Enum
         notice //通知消息
     }
 
-    public enum CqHttpPostMessageTempSource
+    public enum CqHttpMessageTempSource
     {
         group = 0, //群聊
         qq_inquiry = 1, //QQ咨询

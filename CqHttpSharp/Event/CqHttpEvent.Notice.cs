@@ -12,8 +12,8 @@ namespace CqHttpSharp.Event
     public delegate void EvtNoticeGroupBan(CqHttpNoticeGroupBan data);
     public delegate void EvtNoticeAddFriend(CqHttpNoticeAddFriend data);
     public delegate void EvtNoticeGroupRecall(CqHttpNoticeGroupRecall data);
-    public delegate void EvtNoticeCommonRecall(CqHttpNoticeCommonRecall data);
-    public delegate void EvtNoticeCommonPoke(CqHttpNoticeCommonPoke data);
+    public delegate void EvtNoticePrivateRecall(CqHttpNoticePrivateRecall data);
+    public delegate void EvtNoticePrivatePoke(CqHttpNoticePrivatePoke data);
     public delegate void EvtNoticeGroupPoke(CqHttpNoticeGroupPoke data);
     public delegate void EvtNoticeGroupLuckyKing(CqHttpNoticeGroupLuckyKing data);
     public delegate void EvtNoticeGroupHonor(CqHttpNoticeGroupHonor data);

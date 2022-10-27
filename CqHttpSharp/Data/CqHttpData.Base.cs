@@ -17,7 +17,7 @@ namespace CqHttpSharp.Data
         public string sub_type;
         public int message_id;
         public long user_id;
-        public CqHttpMessageChain message;
+        public string message;
         public string raw_message;
         public int font;
         public CqHttpMessageSender sender;
@@ -25,7 +25,7 @@ namespace CqHttpSharp.Data
 
     public class CqHttpDataRequest : CqHttpDataBase
     {
-        public CqHttpPostRequestType request_type;
+        public CqHttpRequestType request_type;
     }
 
     public class CqHttpDataNotice : CqHttpDataBase

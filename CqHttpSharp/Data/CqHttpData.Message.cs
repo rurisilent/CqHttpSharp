@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CqHttpSharp.Data
 {
-    public class CqHttpMessageCommon : CqHttpDataMessage
+    public class CqHttpMessagePrivate : CqHttpDataMessage
     {
         public int temp_source;
     }

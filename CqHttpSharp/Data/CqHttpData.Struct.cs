@@ -4,13 +4,6 @@ using System.Text;
 
 namespace CqHttpSharp.Data
 {
-    public class CqHttpAnonymous
-    {
-        public long id;
-        public string name;
-        public string flag;
-    }
-
     public class CqHttpFileInfo
     {
         public string id;

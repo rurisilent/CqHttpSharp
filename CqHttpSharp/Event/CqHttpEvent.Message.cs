@@ -5,6 +5,6 @@ using CqHttpSharp.Data;
 
 namespace CqHttpSharp.Event
 {
-    public delegate void EvtMessageCommon(CqHttpMessageCommon data);
+    public delegate void EvtMessagePrivate(CqHttpMessagePrivate data);
     public delegate void EvtMessageGroup(CqHttpMessageGroup data);
 }

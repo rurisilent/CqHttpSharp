@@ -22,4 +22,11 @@ namespace CqHttpSharp.Data
         public CqHttpSenderRoleType role;
         public string title; //专属头衔
     }
+
+    public class CqHttpAnonymous
+    {
+        public long id;
+        public string name;
+        public string flag;
+    }
 }

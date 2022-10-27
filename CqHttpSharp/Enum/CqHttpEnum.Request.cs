@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CqHttpSharp.Enum
 {
-    public enum CqHttpPostRequestType
+    public enum CqHttpRequestType
     {
         friend,
         group

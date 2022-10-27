@@ -57,13 +57,13 @@ namespace CqHttpSharp.Data
         public long message_id;
     }
 
-    public class CqHttpNoticeCommonRecall : CqHttpDataNotice
+    public class CqHttpNoticePrivateRecall : CqHttpDataNotice
     {
         public long user_id;
         public long message_id;
     }
 
-    public class CqHttpNoticeCommonPoke : CqHttpDataNotice
+    public class CqHttpNoticePrivatePoke : CqHttpDataNotice
     {
         public CqHttpNoticeNotifySubType sub_type;
         public long sender_id;
