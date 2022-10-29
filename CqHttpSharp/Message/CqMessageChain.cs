@@ -10,6 +10,14 @@ namespace CqHttpSharp.Message
         public CqMessageBuilder Builder { get; private set; }
         public List<CqMessage> Messages { get; private set; }
 
+        public int Count
+        {
+            get
+            {
+                return Messages.Count;
+            }
+        }
+
         public CqMessageChain()
         {
             Builder = new CqMessageBuilder(this);

@@ -9,7 +9,7 @@ namespace CqHttpSharp.Data
     {
         public long group_id;
         public long user_id;
-        public CqHttpFileInfo busid;
+        public CqHttpFileInfo file;
     }
 
     public class CqHttpNoticeGroupAdminChange : CqHttpDataNotice

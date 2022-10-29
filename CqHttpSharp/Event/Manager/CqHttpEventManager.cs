@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using CqHttpSharp.Event;
+using CqHttpSharp.Log;
 
 namespace CqHttpSharp.Event.Manager
 {
     public class CqHttpEventManager
     {
-        public EvtMessagePrivate OnEventPrivateCommon;
+        public EvtCqHttpLog EventLogger;
+
+        public EvtMessagePrivate OnEventMessagePrivate;
         public EvtMessageGroup OnEventMessageGroup;
 
         public EvtNoticeGroupFileUpload OnEventNoticeGroupFileUpload;

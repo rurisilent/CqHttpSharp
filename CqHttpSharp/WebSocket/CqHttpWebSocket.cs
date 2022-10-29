@@ -80,15 +80,10 @@ namespace CqHttpSharp.WebSocket
             output?.Log("WS Start");
         }
 
-        public void Request(string data)
-        {
-            byte[] byteData = utf8.GetBytes(data);
-            ArraySegment<byte> reqData = new ArraySegment<byte>(byteData, 0, byteData.Length);
-            client.SendAsync(reqData, WebSocketMessageType.Text, true, cancellationTokenSource.Token);
-        }
-
         public async Task RequestAsync(string data)
         {
+            if (!IsConnected) return;
+
             byte[] byteData = utf8.GetBytes(data);
             ArraySegment<byte> reqData = new ArraySegment<byte>(byteData, 0, byteData.Length);
             await client.SendAsync(reqData, WebSocketMessageType.Text, true, cancellationTokenSource.Token);

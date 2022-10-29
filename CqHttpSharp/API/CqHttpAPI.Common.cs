@@ -6,7 +6,9 @@ using Newtonsoft.Json;
 using CqHttpSharp.Message;
 using CqHttpSharp.Data;
 using CqHttpSharp.Enum;
+using CqHttpSharp.Log;
 using Newtonsoft.Json.Linq;
+using CqHttpSharp.WebSocket;
 
 namespace CqHttpSharp.API
 {
@@ -18,6 +20,10 @@ namespace CqHttpSharp.API
 
     public class CqHttpAPI : CqHttpAPIBase
     {
+        public CqHttpAPI() : base() { }
+
+        public CqHttpAPI(CqHttpWebSocket _webSocket) : base(_webSocket) { }
+
         /// <summary>
         /// 发送私聊消息
         /// </summary>
@@ -26,16 +32,30 @@ namespace CqHttpSharp.API
         /// <param name="message">消息内容</param>
         /// <param name="auto_escape">消息内容是否解析 CQ 码</param>
         /// <returns>发送的消息 ID</returns>
-        public async Task<CqHttpAPIDataMessageID> SendPrivateMessage(long user_id, long group_id, CqMessageChain message, bool auto_escape = false)
+        public async Task<CqHttpAPIDataMessageID> SendPrivateMessage(long user_id, CqMessageChain message, long group_id = -1, bool auto_escape = false)
         {
+            string msg = message.ToCqQuery();
+
             var req = new CqHttpAPIRequest("send_private_msg");
             req.AddParam("user_id", user_id.ToString());
-            req.AddParam("group_id", group_id.ToString());
-            req.AddParam("message", message.ToCqQuery());
+            if (group_id != -1) req.AddParam("group_id", group_id.ToString());
+            req.AddParam("message", msg);
             req.AddParam("auto_escape", auto_escape.ToString());
 
             CqHttpAPIRespondObject resp = await SendAPIRequestObjectAsync(req);
-            if (resp == null) return null;
+            if (resp == null)
+            {
+                APILogger?.Invoke($"API 调用失败或获取响应超时：send_private_msg", CqHttpLogType.error);
+                return null;
+            }
+            if (group_id == -1)
+            {
+                APILogger?.Invoke($"发送消息至 QQ ({user_id}) : {(msg.Length > 128 ? msg.Substring(0, 128) : msg)}", CqHttpLogType.normal);
+            }
+            else
+            {
+                APILogger?.Invoke($"发送消息至 QQ ({user_id}) 通过群 ({group_id}) : {(msg.Length > 128 ? msg.Substring(0, 128) : msg)}", CqHttpLogType.normal);
+            }
             return resp.ParseData<CqHttpAPIDataMessageID>();
         }
 
@@ -48,13 +68,20 @@ namespace CqHttpSharp.API
         /// <returns>发送的消息 ID</returns>
         public async Task<CqHttpAPIDataMessageID> SendGroupMessage(long group_id, CqMessageChain message, bool auto_escape = false)
         {
+            string msg = message.ToCqQuery();
+
             var req = new CqHttpAPIRequest("send_group_msg");
             req.AddParam("group_id", group_id.ToString());
-            req.AddParam("message", message.ToCqQuery());
+            req.AddParam("message", msg);
             req.AddParam("auto_escape", auto_escape.ToString());
 
             CqHttpAPIRespondObject resp = await SendAPIRequestObjectAsync(req);
-            if (resp == null) return null;
+            if (resp == null)
+            {
+                APILogger?.Invoke($"API 调用失败或获取响应超时：send_group_msg", CqHttpLogType.error);
+                return null;
+            }
+            APILogger?.Invoke($"发送消息至群 ({group_id}) : {(msg.Length > 128 ? msg.Substring(0, 128) : msg)}", CqHttpLogType.normal);
             return resp.ParseData<CqHttpAPIDataMessageID>();
         }
 
@@ -66,11 +93,15 @@ namespace CqHttpSharp.API
         /// <returns>无响应</returns>
         public async Task SendPrivateForwardMessage(long user_id, CqMessageChain message)
         {
+            string msg = message.ToCqQuery();
+
             var req = new CqHttpAPIRequest("send_private_forward_msg");
             req.AddParam("user_id", user_id.ToString());
             req.AddParam("message", message.ToJson());
 
             await SendAPIRequestNoRespAsync(req);
+
+            APILogger?.Invoke($"发送合并转发消息至 QQ ({user_id}) : {(msg.Length > 128 ? msg.Substring(0, 128) : msg)}", CqHttpLogType.normal);
         }
 
         /// <summary>
@@ -81,11 +112,15 @@ namespace CqHttpSharp.API
         /// <returns>无响应</returns>
         public async Task SendGroupForwardMessage(long group_id, CqMessageChain message)
         {
+            string msg = message.ToCqQuery();
+
             var req = new CqHttpAPIRequest("send_group_forward_msg");
             req.AddParam("group_id", group_id.ToString());
             req.AddParam("message", message.ToJson());
 
             await SendAPIRequestNoRespAsync(req);
+
+            APILogger?.Invoke($"发送合并转发消息至群 ({group_id}) : {(msg.Length > 128 ? msg.Substring(0, 128) : msg)}", CqHttpLogType.normal);
         }
 
         /// <summary>
@@ -99,6 +134,8 @@ namespace CqHttpSharp.API
             req.AddParam("message_id", message_id.ToString());
 
             await SendAPIRequestNoRespAsync(req);
+
+            APILogger?.Invoke($"撤回消息 : {message_id}", CqHttpLogType.normal);
         }
 
         /// <summary>
@@ -112,7 +149,12 @@ namespace CqHttpSharp.API
             req.AddParam("message_id", message_id.ToString());
 
             CqHttpAPIRespondObject resp = await SendAPIRequestObjectAsync(req);
-            if (resp == null) return null;
+            if (resp == null)
+            {
+                APILogger?.Invoke($"API 调用失败或获取响应超时：get_msg", CqHttpLogType.error);
+                return null;
+            }
+            APILogger?.Invoke($"获取消息细节 ({message_id})", CqHttpLogType.normal);
             return resp.ParseData<CqHttpAPIDataMessageDetail>();
         }
 

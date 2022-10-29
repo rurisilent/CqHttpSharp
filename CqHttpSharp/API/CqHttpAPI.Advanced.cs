@@ -1,10 +1,15 @@
 ﻿using CqHttpSharp.Data;
+using CqHttpSharp.WebSocket;
 using System.Threading.Tasks;
 
 namespace CqHttpSharp.API
 {
     public class CqHttpAPIAdvanced : CqHttpAPIBase
     {
+        public CqHttpAPIAdvanced() : base() { }
+
+        public CqHttpAPIAdvanced(CqHttpWebSocket _webSocket) : base(_webSocket) { }
+
         /// <summary>
         /// 获取版本信息
         /// </summary>

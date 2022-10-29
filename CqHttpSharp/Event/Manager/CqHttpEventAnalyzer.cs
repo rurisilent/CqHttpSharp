@@ -33,11 +33,13 @@ namespace CqHttpSharp.Event.Manager
                             if (messageType == "private")
                             {
                                 var ret = JsonConvert.DeserializeObject<CqHttpMessagePrivate>(data);
-                                evtManager.OnEventPrivateCommon?.Invoke(ret);
+                                evtManager.EventLogger?.Invoke($"收到来自{ret.sender.nickname} ({ret.sender.user_id}) 的消息 : {ret.message}", Log.CqHttpLogType.normal);
+                                evtManager.OnEventMessagePrivate?.Invoke(ret);
                             }
                             else
                             {
                                 var ret = JsonConvert.DeserializeObject<CqHttpMessageGroup>(data);
+                                evtManager.EventLogger?.Invoke($"收到来自群 ({ret.group_id}) 成员{ret.sender.nickname} ({ret.sender.user_id}) 的消息 : {ret.message}", Log.CqHttpLogType.normal);
                                 evtManager.OnEventMessageGroup?.Invoke(ret);
                             }
                         }
@@ -51,6 +53,7 @@ namespace CqHttpSharp.Event.Manager
                                 if (noticeType == CqHttpNoticeType.group_upload)
                                 {
                                     var ret = JsonConvert.DeserializeObject<CqHttpNoticeGroupFileUpload>(data);
+                                    evtManager.EventLogger?.Invoke($"通知：群 ({ret.group_id}) 成员 ({ret.user_id}) 上传群文件 : {ret.file.name}", Log.CqHttpLogType.normal);
                                     evtManager.OnEventNoticeGroupFileUpload?.Invoke(ret);
                                 }
                                 else if (noticeType == CqHttpNoticeType.group_admin)

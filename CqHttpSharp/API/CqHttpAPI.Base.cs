@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using CqHttpSharp.WebSocket;
+using CqHttpSharp.Log;
 
 namespace CqHttpSharp.API
 {
@@ -16,6 +17,8 @@ namespace CqHttpSharp.API
 
         protected readonly int c_updateDeltaTime = 10; //ms
         protected readonly int c_timeoutCount = 1500; //15s
+
+        public EvtCqHttpLog APILogger;
 
         public CqHttpAPIBase()
         {
@@ -94,10 +97,12 @@ namespace CqHttpSharp.API
 
         protected async Task<CqHttpAPIRespondObject> SendAPIRequestObjectAsync(CqHttpAPIRequest req)
         {
+            if (!socket.IsConnected) return null;
+
             var id = GetReqId();
             req.echo = id.ToString();
 
-            socket.Request(req.Serialize());
+            await socket.RequestAsync(req.Serialize());
 
             int count = 0;
             CqHttpAPIRespondObject resp = null;
@@ -122,10 +127,12 @@ namespace CqHttpSharp.API
 
         protected async Task<CqHttpAPIRespondArray> SendAPIRequestArrayAsync(CqHttpAPIRequest req)
         {
+            if (!socket.IsConnected) return null;
+
             var id = GetReqId();
             req.echo = id.ToString();
 
-            socket.Request(req.Serialize());
+            await socket.RequestAsync(req.Serialize());
 
             int count = 0;
             CqHttpAPIRespondArray resp = null;
@@ -150,6 +157,8 @@ namespace CqHttpSharp.API
 
         protected async Task SendAPIRequestNoRespAsync(CqHttpAPIRequest req)
         {
+            if (!socket.IsConnected) return;
+
             await socket.RequestAsync(req.Serialize());
         }
     }

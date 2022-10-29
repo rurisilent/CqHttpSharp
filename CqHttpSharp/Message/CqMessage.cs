@@ -8,7 +8,7 @@ namespace CqHttpSharp.Message
     public class CqMessage
     {
         public CqCode type { get; private set; }
-        Dictionary<string, string> data;
+        public Dictionary<string, string> data { get; private set; }
 
         public CqMessage(CqCode _type)
         {

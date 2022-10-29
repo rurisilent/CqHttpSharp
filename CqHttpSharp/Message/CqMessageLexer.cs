@@ -41,7 +41,7 @@ namespace CqHttpSharp.Message
                             {
                                 int equalIndex = cqData[i].IndexOf('=');
                                 if (equalIndex != -1) 
-                                    msg.AddData(cqData[i].Substring(0, equalIndex), CqHttpCharEncoder.Decode(cqData[i].Substring(equalIndex + 1, cqData[i].Length - equalIndex + 2)));
+                                    msg.AddData(cqData[i].Substring(0, equalIndex), CqHttpCharEncoder.Decode(cqData[i].Substring(equalIndex + 1, cqData[i].Length - equalIndex - 1)));
                             }
                             ret.AddMessage(msg);
                         }
@@ -61,6 +61,7 @@ namespace CqHttpSharp.Message
             {
                 CqMessage msg = new CqMessage(CqCode.text);
                 msg.AddData("text", tempMsg.ToString());
+                ret.AddMessage(msg);
             }
 
             return ret;
