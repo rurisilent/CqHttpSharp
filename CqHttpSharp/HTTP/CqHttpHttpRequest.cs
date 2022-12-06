@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -106,6 +107,36 @@ namespace CqHttpSharp.HTTP
                 stream.Write(data, 0, data.Length);
                 stream.Close();
             }
+
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                {
+                    Stream streamRes = response.GetResponseStream();
+                    string result = new StreamReader(streamRes, Encoding.UTF8).ReadToEnd();
+
+                    return result;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<string> APIHttpJsonAsync(string url, string method, string json)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(url));
+            request.Method = method;
+            request.Timeout = 1000000;
+            request.ContentType = "application/json";
+            request.ServerCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            byte[] data = Encoding.UTF8.GetBytes(json);
+            request.ContentLength = data.Length;
+            Stream stream = await request.GetRequestStreamAsync();
+            stream.Write(data, 0, data.Length);
+            stream.Close();
 
             try
             {
