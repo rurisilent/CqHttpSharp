@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NapCatSharpLib", "NapCatSharpLib\NapCatSharpLib.csproj", "{A22F2D8E-4A3F-4664-BE06-C9D14273133D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A22F2D8E-4A3F-4664-BE06-C9D14273133D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A22F2D8E-4A3F-4664-BE06-C9D14273133D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A22F2D8E-4A3F-4664-BE06-C9D14273133D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A22F2D8E-4A3F-4664-BE06-C9D14273133D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7036EB13-29A3-48AD-8011-CFC014EE5506}
+	EndGlobalSection
+EndGlobal
